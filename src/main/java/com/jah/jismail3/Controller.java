@@ -22,6 +22,9 @@ public class Controller {
     @Autowired
     private Config conz;
 
+
+    // --- End Points --- //
+
     // end point url: localhost:8080/foo
     @GetMapping("/foo")
     public String getReply(){

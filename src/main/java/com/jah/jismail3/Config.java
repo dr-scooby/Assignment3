@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
  * Name: Jahangir Ismail
  * ID: A00036852
  * Assignment 3
- * Handle the configuration from properties and from configmap.yaml files
+ * Handle the configuration info from properties and from configmap.yaml files
  */
 
 @Component
