@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: busywait-app
+  namespace: jismail3ns
+spec:
+  serviceName: "busywait-app"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: busywait-app
+  template:
+    metadata:
+      labels:
+        app: busywait-app
+    spec:
+      volumes:
+        - name: red-storage
+          persistentVolumeClaim:
+            claimName: red-pv-claim
+      containers:
+        - name: busywait-app
+          image: hinurali/jismail3:jismail3
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: red-storage
+              mountPath: /data
+          env:
+            - name: configValue
+              valueFrom:
+                configMapKeyRef:
+                  name: jah-config
+                  key: configValue
+            - name: secretvalue
+              valueFrom:
+                secretKeyRef:
+                  name: jah-secret
+                  key: secretValue
+          ports:
+            # 8080
+            - containerPort: 3000
+          resources:
+            requests:
+              cpu: "200m"
+            limits:
+              cpu: "500m"
+          readinessProbe:
+            httpGet:
+              path: /isAlive
+              port: 3000
+            initialDelaySeconds: 50 # Increase to allow more startup time
+            periodSeconds: 5 # Probe frequency
+            #failureThreshold: 3       # Number of failures allowed before marking the pod as unready
+            #successThreshold: 1       # Number of successes required to mark the pod as ready
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: busywait-app
+  namespace: jismail3ns
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 3000
+      targetPort: 3000
+      #nodePort: 3000
+  selector:
+    app: busywait-app
