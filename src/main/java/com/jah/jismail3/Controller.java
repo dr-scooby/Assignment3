@@ -27,6 +27,13 @@ public class Controller {
 
 
     // end point url: localhost:8080/hello
+    /*
+
+    {
+    "name":"jah"
+}
+
+     */
     @PostMapping("/hello")
     public String getHello(@RequestBody User user){
         // get the data from the client body - JSON, and convert to User class
