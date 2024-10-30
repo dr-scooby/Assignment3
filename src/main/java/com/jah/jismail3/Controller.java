@@ -1,6 +1,7 @@
 package com.jah.jismail3;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class Controller {
 
 
+    @Autowired
+    private Config conz;
 
     // end point url: localhost:8080/foo
     @GetMapping("/foo")
@@ -43,4 +46,21 @@ public class Controller {
 
     }
 
+
+    @GetMapping("/configValue")
+    public String getConfigValue(){
+        return conz.getConfigValue();
+    }
+
+
+    @GetMapping("/secretValue")
+    public String getSecretValue(){
+        return conz.getSecretValue();
+    }
+
+
+    @GetMapping("/envValue")
+    public String getEnValue(){
+        return conz.getEnvirVariable();
+    }
 }

@@ -1,6 +1,7 @@
 package com.jah.jismail3;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 /**
  * Name: Jahangir Ismail
@@ -9,6 +10,7 @@ import org.springframework.beans.factory.annotation.Value;
  * Handle the configuration from properties and from configmap.yaml files
  */
 
+@Component
 public class Config {
 
     @Value("${configvalue}")
