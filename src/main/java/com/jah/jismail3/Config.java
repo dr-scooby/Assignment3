@@ -22,12 +22,24 @@ public class Config {
     @Value("${envirvariable}")
     private String envirVariable;
 
+    @Value("${filename}")
+    private String fileName;
 
     public Config() {
     }
 
 
     // ------ GET and SET methods ------
+
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
+
     public String getConfigValue() {
         return configValue;
     }

@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: scoobs-config
-  namespace: scoobsns
+  name: jah-config
+  namespace: jismail3ns
 data:
   configValue: eagle
   secretValue: jazzy
   envirVariable: environment Wind
-  mymountpath: /data/red/datafile.txt
+  fileName: /data/datafile.txt
