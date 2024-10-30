@@ -28,11 +28,10 @@ public class Controller {
 
     // end point url: localhost:8080/hello
     /*
-
+    in postman:
     {
-    "name":"jah"
-}
-
+        "name":"jah"
+    }
      */
     @PostMapping("/hello")
     public String getHello(@RequestBody User user){
