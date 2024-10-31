@@ -7,6 +7,12 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
+/**
+ * Name: Jahangir Ismail
+ * ID: A00036852
+ * Assignment 3
+ * Store the data from the client
+ */
 
 @Component
 public class Data {
