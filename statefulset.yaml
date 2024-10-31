@@ -1,13 +1,35 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: jismail4ns
+  name: jismailns
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jah-config
+  namespace: jismailns
+data:
+  configValue: eagle
+  envirVariable: environment Wind
+  myfileName: datafile.txt
+  myfilePath: /data/
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jah-secret
+  namespace: jismailns
+# Opaque default for abritrary key-value pairs
+type: Opaque
+data:
+  # initial secretvalue: scooby encoded in base64
+  secretValue: c2Nvb2J5
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: red-pv-claim
-  namespace: jismail4ns
+  namespace: jismailns
 spec:
   accessModes:
     - ReadWriteMany
@@ -19,7 +41,7 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: busywait-app
-  namespace: jismail4ns
+  namespace: jismailns
 spec:
   serviceName: "busywait-app"
   replicas: 2
@@ -90,7 +112,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: busywait-app
-  namespace: jismail4ns
+  namespace: jismailns
 spec:
   type: LoadBalancer
   ports:
