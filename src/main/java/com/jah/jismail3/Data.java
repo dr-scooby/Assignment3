@@ -3,26 +3,48 @@ package com.jah.jismail3;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 @Component
 public class Data {
 
-    private String data;
+    private String data; // data from client
     private File file; //handle the file
-
+    private File datafile;
 
     public Data() {
         data = "";
 
     }
 
+    public String getData() {
+        return data;
+    }
+
+
+
     public Data(String data) {
         this.data = data;
     }
 
-    public String getData() {
+
+    // get the data from the file
+    public String getFileData() {
+        String somestuff = "";
+        try {
+            Scanner myscan = new Scanner(datafile);
+            while(myscan.hasNextLine()){
+                String data = myscan.nextLine();
+                System.out.println(data);
+                somestuff += data + "\n";
+            }
+            myscan.close();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         return data;
     }
 
@@ -31,7 +53,9 @@ public class Data {
     }
 
     public void setFile(String filepath){
+        System.out.println("file path: " + filepath);
         file = new File(filepath);
+
     }
 
     public boolean isExist(){
@@ -44,15 +68,39 @@ public class Data {
         boolean ok = false;
         if(isExist()){
             if(file.canWrite()){
-                FileWriter fw = new FileWriter(file);
-                fw.write(data+ "\n");
-                fw.flush();
-                fw.close();
-                System.out.println("Successfully wrote to file. the file:\n");
+               write();
+               ok = true;
+            }
+        }else{
+            // file doesn't exist, need to create
+            System.out.println("File doesn't exist, creating...");
+            if(file.createNewFile()){
+                write();
                 ok = true;
+            }else{
+                System.out.println("failed to create file");
             }
         }
 
+        return ok;
+    }
+
+    private void write() throws IOException {
+        FileWriter fw = new FileWriter(file);
+        fw.write(data+ "\n");
+        fw.flush();
+        fw.close();
+        System.out.println("Successfully wrote to file. the file:\n");
+    }
+
+    public boolean write(File f) throws IOException{
+        boolean ok =false;
+        FileWriter fw = new FileWriter(f);
+        fw.write(data+ "\n");
+        fw.flush();
+        fw.close();
+        System.out.println("Successfully wrote to file. the file:\n");
+        ok = true;
         return ok;
     }
 }

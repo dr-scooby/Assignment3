@@ -22,8 +22,13 @@ public class Config {
     @Value("${envirvariable}")
     private String envirVariable;
 
-    @Value("${filename}")
+    @Value("${myfilename}")
     private String fileName;
+
+    @Value("${myfilepath}")
+    private String filePath;
+
+
 
     public Config() {
     }
@@ -31,6 +36,14 @@ public class Config {
 
     // ------ GET and SET methods ------
 
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
 
     public String getFileName() {
         return fileName;
@@ -71,6 +84,8 @@ public class Config {
                 "configValue='" + configValue + '\'' +
                 ", secretValue='" + secretValue + '\'' +
                 ", envirVariable='" + envirVariable + '\'' +
+                ", fileName='" + fileName + '\'' +
+                ", filePath='" + filePath + '\'' +
                 '}';
     }
 }
