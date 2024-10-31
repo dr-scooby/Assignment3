@@ -2,7 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: busywait-app-hpa
-  namespace: jismail5ns
+  namespace: jismail4ns
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

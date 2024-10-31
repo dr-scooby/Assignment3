@@ -1,3 +1,20 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jismail4ns
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: red-pv-claim
+  namespace: jismail4ns
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10M
+---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
