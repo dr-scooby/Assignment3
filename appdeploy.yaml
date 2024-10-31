@@ -1,11 +1,52 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: jismail5ns
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: jah-config
+  namespace: jismail5ns
+data:
+  configValue: eagle
+  envirVariable: environment Wind
+  myfileName: datafile.txt
+  myfilePath: /data/
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: jah-secret
+  namespace: jismail5ns
+# Opaque default for abritrary key-value pairs
+type: Opaque
+data:
+  # initial secretvalue: scooby encoded in base64
+  secretValue: c2Nvb2J5
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: red-pv-claim
+  namespace: jismail5ns
+spec:
+  accessModes:
+    - ReadWriteMany
+  resources:
+    requests:
+      storage: 10M
+---
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: busywait-app
-  namespace: jismail4ns
+  namespace: jismail5ns
+  labels:
+    app: busywait-app
 spec:
-  serviceName: "busywait-app"
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: busywait-app
@@ -36,16 +77,16 @@ spec:
                 configMapKeyRef:
                   name: jah-config
                   key: envirVariable
-            - name:   myfileName
+            - name: myfileName
               valueFrom:
                 configMapKeyRef:
                   name: jah-config
-                  key:   myfileName
-            - name:   myfilePath
+                  key: myfileName
+            - name: myfilePath
               valueFrom:
                 configMapKeyRef:
                   name: jah-config
-                  key:   myfilePath
+                  key: myfilePath
             - name: secretvalue
               valueFrom:
                 secretKeyRef:
@@ -64,21 +105,21 @@ spec:
               path: /isAlive
               port: 3000
             initialDelaySeconds: 50 # Increase to allow more startup time
-            periodSeconds: 5 # Probe frequency
+            periodSeconds: 10 # Probe frequency
             #failureThreshold: 3       # Number of failures allowed before marking the pod as unready
             #successThreshold: 1       # Number of successes required to mark the pod as ready
-
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: busywait-app
-  namespace: jismail4ns
+  namespace: jismail5ns
 spec:
+  #type: NodePort
   type: LoadBalancer
   ports:
     - port: 3000
       targetPort: 3000
-      #nodePort: 3000
+      #nodePort: 30000
   selector:
     app: busywait-app

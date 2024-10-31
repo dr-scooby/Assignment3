@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: jah-config
-  namespace: jismail3ns
+  namespace: jismail4ns
 data:
   configValue: eagle
   envirVariable: environment Wind
