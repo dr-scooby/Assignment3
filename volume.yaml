@@ -2,7 +2,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: red-pv-claim
-  namespace: jismail4ns
+  namespace: jismailns
 spec:
   accessModes:
     - ReadWriteMany
